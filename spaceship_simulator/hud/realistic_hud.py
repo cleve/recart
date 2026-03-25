@@ -6,6 +6,7 @@ Panels use Pillow-generated PNG textures for an SVG-quality cockpit look.
 
 import math
 from panda3d.core import TextNode, CardMaker, TransparencyAttrib
+from spaceship_simulator.hud.panel import TouchControlPanel
 
 # Fraction of RADAR_RANGE actually displayed on screen.
 # At RADAR_RANGE=50000 and MAX_VELOCITY=1000, fraction=0.10 shows 5000 units;
@@ -39,6 +40,7 @@ class RealisticHUD:
         self._load_textures()
         self._build_panels()
         self._build_radar_blips()
+        self.touch_control_panel = TouchControlPanel(app, ship_state)
 
     # ------------------------------------------------------------------ textures
 
@@ -236,6 +238,8 @@ class RealisticHUD:
     def update(self, dt, ship, universe, view_mode):
         from spaceship_simulator.config.constants import RADAR_RANGE
 
+        del dt
+
         self.text_nodes["status_data"].set_text(
             f"VEL: {ship.velocity.length():.1f} u/s\n"
             f"ENR: {ship.energy:.0f}%  SHD: {ship.shield:.0f}%\n"
@@ -272,6 +276,10 @@ class RealisticHUD:
             )
 
         self._update_blips(ship, universe)
+        self.touch_control_panel.update()
 
     def set_view_mode(self, mode):
         self.view_mode = mode
+
+    def cleanup(self):
+        self.touch_control_panel.cleanup()

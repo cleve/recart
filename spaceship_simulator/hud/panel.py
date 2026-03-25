@@ -2,8 +2,14 @@
 HUD base components for the spaceship simulator.
 """
 
-from panda3d.core import TextNode, Point3
-from spaceship_simulator.config.constants import HUD_FONT_SIZE, HUD_COLOR_PRIMARY
+from panda3d.core import CardMaker, Point3, TextNode, TransparencyAttrib
+from spaceship_simulator.config.constants import (
+    HUD_COLOR_PRIMARY,
+    HUD_COLOR_SECONDARY,
+    HUD_COLOR_WARNING,
+    HUD_FONT_SIZE,
+    get_string,
+)
 
 
 class HUDPanel:
@@ -128,3 +134,123 @@ class StatusPanel(HUDPanel):
             f"{get_string('oxygen', 'en')}: {self.ship.oxygen:.0f}%",
             f"{get_string('velocity', 'en')}: {self.ship.velocity.length():.0f}u",
         ]
+
+
+class TouchControlPanel(HUDPanel):
+    """Touch-style action panel shown on the right side of the cockpit HUD."""
+
+    BUTTON_KEYS = [
+        "landing",
+        "retro_propulsors",
+        "deploy_solar_panels",
+        "free_trash",
+        "emergency_stop",
+    ]
+
+    def __init__(self, app, ship_state):
+        super().__init__(app, "TouchControl", x=0.88, y=0.16, width=0.52, height=0.50)
+        self.ship = ship_state
+        self.language = getattr(app, "language", "en")
+        self.button_nodes = {}
+        self.button_labels = {}
+        self.status_text = None
+        self._build_ui()
+
+    def _make_card(self, name: str, left: float, right: float, bottom: float, top: float, color, alpha: float):
+        cm = CardMaker(name)
+        cm.set_frame(left, right, bottom, top)
+        node = self.app.aspect2d.attach_new_node(cm.generate())
+        node.set_transparency(TransparencyAttrib.M_alpha)
+        node.set_color(color[0], color[1], color[2], alpha)
+        self.text_objs.append(node)
+        return node
+
+    def _make_label(self, name: str, text: str, x: float, y: float, scale: float, color):
+        text_node = TextNode(name)
+        text_node.set_text(text)
+        text_node.set_text_color(color[0], color[1], color[2], 1.0)
+        text_node.set_align(TextNode.A_center)
+        node = self.app.aspect2d.attach_new_node(text_node)
+        node.set_pos(x, 0, y)
+        node.set_scale(scale)
+        self.text_objs.append(node)
+        return text_node, node
+
+    def _build_ui(self):
+        panel_bg = self._make_card(
+            "TouchControlPanelBg",
+            self.x,
+            self.x + self.width,
+            self.y - self.height,
+            self.y,
+            HUD_COLOR_SECONDARY,
+            0.14,
+        )
+        panel_bg.set_bin("fixed", 2)
+
+        title_text, title_node = self._make_label(
+            "TouchControlTitle",
+            get_string("control_panel", self.language),
+            self.x + self.width * 0.5,
+            self.y - 0.05,
+            0.032,
+            HUD_COLOR_SECONDARY,
+        )
+        title_node.set_bin("fixed", 12)
+        self.button_labels["title"] = title_text
+
+        self.status_text, status_node = self._make_label(
+            "TouchControlStatus",
+            get_string("control_panel_status", self.language),
+            self.x + self.width * 0.5,
+            self.y - 0.10,
+            0.020,
+            HUD_COLOR_PRIMARY,
+        )
+        status_node.set_bin("fixed", 12)
+
+        left = self.x + 0.04
+        right = self.x + self.width - 0.04
+        button_height = 0.065
+        gap = 0.018
+        start_top = self.y - 0.16
+
+        for index, key in enumerate(self.BUTTON_KEYS):
+            top = start_top - index * (button_height + gap)
+            bottom = top - button_height
+            color = HUD_COLOR_WARNING if key == "emergency_stop" else HUD_COLOR_SECONDARY
+            alpha = 0.28 if key == "emergency_stop" else 0.18
+
+            button = self._make_card(f"TouchButton{index}", left, right, bottom, top, color, alpha)
+            button.set_bin("fixed", 4)
+            self.button_nodes[key] = button
+
+            label_text, label_node = self._make_label(
+                f"TouchButtonLabel{index}",
+                get_string(key, self.language),
+                (left + right) * 0.5,
+                bottom + button_height * 0.33,
+                0.024,
+                HUD_COLOR_WARNING if key == "emergency_stop" else HUD_COLOR_PRIMARY,
+            )
+            label_node.set_bin("fixed", 12)
+            self.button_labels[key] = label_text
+
+    def update(self):
+        """Refresh labels and visual emphasis based on ship state."""
+        self.language = getattr(self.app, "language", "en")
+        self.button_labels["title"].set_text(get_string("control_panel", self.language))
+        self.status_text.set_text(get_string("control_panel_status", self.language))
+
+        for key in self.BUTTON_KEYS:
+            self.button_labels[key].set_text(get_string(key, self.language))
+
+        moving_fast = self.ship.velocity.length() > 120.0
+        for key, node in self.button_nodes.items():
+            if key == "emergency_stop":
+                if moving_fast:
+                    node.set_color(1.0, 0.2, 0.2, 0.34)
+                else:
+                    node.set_color(HUD_COLOR_WARNING[0], HUD_COLOR_WARNING[1], HUD_COLOR_WARNING[2], 0.24)
+            else:
+                node.set_color(HUD_COLOR_SECONDARY[0], HUD_COLOR_SECONDARY[1], HUD_COLOR_SECONDARY[2], 0.18)

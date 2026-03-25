@@ -9,7 +9,7 @@ readme = "README.md"
 spaceship = "spaceship_simulator.main:main"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.12"
 panda3d = "^1.10.16"
 pillow = ">=10.0"
 

@@ -40,6 +40,13 @@ STRINGS = {
         
         # Controls help
         "controls": "CONTROLS",
+        "control_panel": "TOUCH CONTROL",
+        "control_panel_status": "Touch grid online",
+        "landing": "Landing",
+        "retro_propulsors": "Retro-propulsors",
+        "deploy_solar_panels": "Deploy solar panels",
+        "free_trash": "Free trash",
+        "emergency_stop": "Emergency stop",
         "thrust": "W/S - Thrust",
         "yaw": "A/D - Yaw",
         "pitch": "Q/E - Pitch",
@@ -83,6 +90,13 @@ STRINGS = {
         
         # Controls help
         "controls": "CONTROLES",
+        "control_panel": "CONTROL TACTIL",
+        "control_panel_status": "Panel tactil en linea",
+        "landing": "Aterrizaje",
+        "retro_propulsors": "Retropropulsores",
+        "deploy_solar_panels": "Desplegar paneles solares",
+        "free_trash": "Liberar basura",
+        "emergency_stop": "Parada de emergencia",
         "thrust": "W/S - Empuje",
         "yaw": "A/D - Guiñada",
         "pitch": "Q/E - Cabeceo",
@@ -104,13 +118,13 @@ WINDOW_WIDTH = 1600
 WINDOW_HEIGHT = 900
 WINDOW_TITLE = "Spaceship Simulator"
 
-# Physics
-MAX_VELOCITY = 1000.0
-MAX_ACCELERATION = 500.0
-ACCELERATION_RATE = 0.05
-DECELERATION_RATE = 0.08
-ROTATION_SPEED = 2.0
-STRAFE_SPEED = 30.0
+# Physics — tuned for a massive capital ship (heavy, sluggish feel)
+MAX_VELOCITY = 200.0          # top linear speed (reduced for heavy ship)
+MAX_ACCELERATION = 100.0
+ACCELERATION_RATE = 0.02      # slow to spool up (exponential decay factor)
+DECELERATION_RATE = 0.025     # slow to bleed off speed
+ROTATION_SPEED = 0.5          # degrees/frame; massive ships turn slowly
+STRAFE_SPEED = 40.0           # up/down thruster speed (units/s)
 
 # Ship Systems
 INITIAL_ENERGY = 100.0

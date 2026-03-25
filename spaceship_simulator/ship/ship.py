@@ -8,6 +8,7 @@ from spaceship_simulator.config.constants import (
     INITIAL_SHIELD, MAX_SHIELD, SHIELD_REGEN_RATE,
     INITIAL_OXYGEN, MAX_OXYGEN, OXYGEN_DRAIN_RATE,
     MAX_VELOCITY, MAX_ACCELERATION, ACCELERATION_RATE,
+    ROTATION_SPEED, STRAFE_SPEED,
 )
 from spaceship_simulator.utils.math_utils import clamp, exponential_decay
 
@@ -70,8 +71,8 @@ class ShipState:
         # Set velocity in forward direction (Vec3 * float, not float * Vec3)
         self.velocity = self.forward * new_forward_speed
         
-        # Add strafe movement (vertical) - also use correct Vec3 * float order
-        strafe_amount = self.strafe_input * max(0, MAX_VELOCITY * 0.3)
+        # Add strafe movement (vertical — Space = up, Ctrl = down)
+        strafe_amount = self.strafe_input * STRAFE_SPEED
         self.velocity += self.up * strafe_amount
         
         # Update position
@@ -79,11 +80,11 @@ class ShipState:
         
         # Update rotation
         if self.yaw_input != 0:
-            self.heading += self.yaw_input * 2.0
+            self.heading += self.yaw_input * ROTATION_SPEED
         if self.pitch_input != 0:
-            self.pitch += self.pitch_input * 2.0
+            self.pitch += self.pitch_input * ROTATION_SPEED
         if self.roll_input != 0:
-            self.roll += self.roll_input * 2.0
+            self.roll += self.roll_input * ROTATION_SPEED
         
         # Clamp pitch to -90 to 90 degrees
         self.pitch = clamp(self.pitch, -90, 90)

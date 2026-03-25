@@ -13,6 +13,7 @@ from spaceship_simulator.config.constants import (
 from spaceship_simulator.ship.ship import ShipState
 from spaceship_simulator.world.universe import Galaxy
 from spaceship_simulator.world.world_renderer import WorldRenderer
+from spaceship_simulator.world.starfield import StarField
 from spaceship_simulator.input_handler import InputHandler
 from spaceship_simulator.hud.realistic_hud import RealisticHUD
 from spaceship_simulator.hud.radar_mouse import RadarMouseInteractor
@@ -69,7 +70,10 @@ class SpaceshipSimulator(ShowBase):
 
         # Build visible entity geometry for main 3D view.
         self.world_renderer = WorldRenderer(self, self.universe, self.ship)
-        
+
+        # Star field — rendered as coloured GL points filling the background
+        self.starfield = StarField(self)
+
         # Setup camera for first-person view
         self.camera.set_pos(0, 5, 0)
         self.camera.look_at(Point3(0, 5, -1))
@@ -146,6 +150,8 @@ class SpaceshipSimulator(ShowBase):
         """Update 3D world entities visibility around the ship."""
         if self.world_renderer is not None:
             self.world_renderer.update(task.getDt())
+        # Keep star sphere centred on the camera so it fills the sky
+        self.starfield.update(self.camera.get_pos(self.render))
         return task.cont
     
     def _check_nearby_entities(self):
@@ -189,6 +195,8 @@ class SpaceshipSimulator(ShowBase):
     
     def userExit(self):
         """Handle user exit request."""
+        if self.hud is not None and hasattr(self.hud, "cleanup"):
+            self.hud.cleanup()
         print("Exiting spaceship simulator...")
         import sys
         sys.exit()
