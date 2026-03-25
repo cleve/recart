@@ -1,0 +1,209 @@
+#!/usr/bin/env bash
+# SPACESHIP SIMULATOR - QUICK REFERENCE
+
+cat << 'EOF'
+
+╔══════════════════════════════════════════════════════════════════╗
+║         SPACESHIP SIMULATOR - MVP v0.1                           ║
+║    First-person arcade spaceship exploration game                ║
+║         Built with Panda3D + Python + Poetry                     ║
+╚══════════════════════════════════════════════════════════════════╝
+
+🚀 QUICK START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Install dependencies:
+     $ poetry install
+
+  2. Run the game:
+     $ poetry run spaceship
+
+  3. Enjoy! 🎮
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📖 DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  README.md          → Game guide, controls, features
+  DEVELOPMENT.md     → Architecture, extension guide
+  PROJECT_SUMMARY.md → Complete feature list & stats
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⌨️  KEY CONTROLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Flight Controls:
+    W/S       - Thrust / Reverse
+    A/D       - Yaw (turn left/right)
+    Q/E       - Pitch (nose up/down)
+    Z/X       - Roll (barrel roll)
+    Space/Ctrl- Strafe up/down
+
+  View Modes:
+    F1/F2/F3/F4 - Switch between 4 camera views
+
+  Interface:
+    H   - Toggle help
+    P   - Pause
+    ESC - Exit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 FEATURES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ First-person arcade controls
+  ✅ Full 3D flight physics
+  ✅ Procedural galaxy (230+ entities)
+  ✅ Real-time ship telemetry HUD
+  ✅ Radar system (50k unit range)
+  ✅ Communication log
+  ✅ Energy/Shield/Oxygen management
+  ✅ 4 camera view modes
+  ✅ Bilingual UI (EN/ES)
+  ✅ Modular, extensible architecture
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📁 PROJECT STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  spaceship_simulator/
+    ├── main.py              Main game application
+    ├── input_handler.py     Keyboard controls
+    ├── ship/
+    │   └── ship.py         Ship state & physics
+    ├── world/
+    │   └── universe.py     Galaxy generation
+    ├── config/
+    │   └── constants.py    Game config & strings
+    ├── hud/
+    │   └── panel.py        HUD components
+    └── utils/
+        └── math_utils.py   Helper functions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔧 GETTING STARTED WITH DEVELOPMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Add a new weapon system:
+    → Open spaceship_simulator/ship/ship.py
+    → Add weapon instance in ShipState.__init__()
+    → Wire up input in input_handler.py
+    → Update HUD in hud/panel.py
+
+  Add a new ship system:
+    → Add property in ship.py
+    → Create _update_system() method
+    → Call in ship.update()
+    → Display in HUD
+
+  See DEVELOPMENT.md for detailed examples
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 NEXT STEPS (Future Versions)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  v0.2: Combat System
+    - Weapons (primary & secondary)
+    - Enemy encounters
+    - Damage & repairs
+
+  v0.3: World Exploration
+    - Planetary landing
+    - NPC interactions
+    - Trading system
+
+  v0.4: Enhanced Graphics
+    - 3D models
+    - Particle effects
+    - Sound & music
+
+  v0.5: Multiplayer
+    - Local co-op
+    - Network play
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 REQUIREMENTS MET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✅ First-person display (changeable with F buttons)
+  ✅ Arcade-style gameplay (v0.1)
+  ✅ Finite galaxy map (100k x 100k x 100k)
+  ✅ No combat (reserved for v0.2)
+  ✅ WASD controls + QE/ZX for rotation
+  ✅ Bilingual UI (English default, Spanish ready)
+  ✅ Fast prototype with modular architecture
+  ✅ Radar, Communications, Status HUD components
+  ✅ Energy, shields, oxygen, velocity, acceleration tracking
+  ✅ Crew and tripulation status
+  ✅ Procedurally-generated universe to explore
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎮 GAMEPLAY LOOP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Start at center of galaxy
+  2. Use WASD to navigate in 3D space
+  3. Watch radar for nearby entities
+  4. Discover planets, stations, anomalies
+  5. Monitor ship systems in status panel
+  6. Manage energy, shields, oxygen
+  7. Explore, discover, survive!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🐛 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Issue: Poetry not found
+    → Install: https://python-poetry.org/docs/#installation
+
+  Issue: Panda3D compile errors
+    → Verify: poetry show panda3d
+    → Reinstall: poetry install --no-cache
+
+  Issue: Controls not working
+    → Ensure game window is in focus
+    → Try toggling help (H) to verify input
+
+  Issue: Low frame rate
+    → Try different view mode (F1-F4)
+    → Check system resources
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📞 SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Documentation:
+    - README.md          (User guide)
+    - DEVELOPMENT.md     (Developer guide)
+    - PROJECT_SUMMARY.md (Full feature list)
+
+  References:
+    - Panda3D: https://docs.panda3d.org/1.10/python/
+    - Poetry:  https://python-poetry.org/docs/
+    - Python:  https://docs.python.org/3.9/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ READY TO LAUNCH! ✨
+
+  $ poetry run spaceship
+
+  May your explorations be legendary! 🚀🌌
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Spaceship Simulator MVP v0.1
+Built with Panda3D | Python 3.9+ | Poetry
+License: See LICENSE file
+
+EOF

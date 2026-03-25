@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "spaceship-simulator"
+version = "0.1.0"
+description = "First-person arcade spaceship exploration and simulation game built with Panda3D"
+authors = ["User"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+spaceship = "spaceship_simulator.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+panda3d = "^1.10.16"
+pillow = ">=10.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
